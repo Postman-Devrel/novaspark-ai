@@ -2,18 +2,12 @@ spec: package/v1
 name: blaze
 meta:
   visibility: private
-  description: Marketing content writer — blogs, social posts, newsletters
-  labels:
-    department: marketing
-    role: content
 agent:
   build:
     context: .
     dockerfile: Dockerfile
   interfaces:
     messaging: true
-  dev:
-    command: bun --watch agent/index.ts
 models:
   main:
     provider: anthropic
