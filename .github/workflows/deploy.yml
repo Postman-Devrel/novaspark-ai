@@ -1,0 +1,142 @@
+name: Deploy NovaSpark AI Agents
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      agent:
+        description: "Deploy a specific agent (leave empty for all)"
+        required: false
+        type: choice
+        options: ["", "blaze", "pixel", "forge", "compass", "stride", "ledger"]
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      blaze: ${{ steps.filter.outputs.blaze }}
+      pixel: ${{ steps.filter.outputs.pixel }}
+      forge: ${{ steps.filter.outputs.forge }}
+      compass: ${{ steps.filter.outputs.compass }}
+      stride: ${{ steps.filter.outputs.stride }}
+      ledger: ${{ steps.filter.outputs.ledger }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            blaze:   ["agents/blaze/**"]
+            pixel:   ["agents/pixel/**"]
+            forge:   ["agents/forge/**"]
+            compass: ["agents/compass/**"]
+            stride:  ["agents/stride/**"]
+            ledger:  ["agents/ledger/**"]
+
+  deploy-blaze:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.blaze == 'true' || github.event.inputs.agent == 'blaze' || github.event.inputs.agent == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agents/blaze
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Astro CLI
+        run: npm install -g @astropods/cli
+      - name: Deploy Blaze
+        run: ast push
+        env:
+          ASTROPODS_TOKEN: ${{ secrets.ASTROPODS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  deploy-pixel:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.pixel == 'true' || github.event.inputs.agent == 'pixel' || github.event.inputs.agent == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agents/pixel
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Astro CLI
+        run: npm install -g @astropods/cli
+      - name: Deploy Pixel
+        run: ast push
+        env:
+          ASTROPODS_TOKEN: ${{ secrets.ASTROPODS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  deploy-forge:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.forge == 'true' || github.event.inputs.agent == 'forge' || github.event.inputs.agent == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agents/forge
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Astro CLI
+        run: npm install -g @astropods/cli
+      - name: Deploy Forge
+        run: ast push
+        env:
+          ASTROPODS_TOKEN: ${{ secrets.ASTROPODS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_AGENT_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  deploy-compass:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.compass == 'true' || github.event.inputs.agent == 'compass' || github.event.inputs.agent == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agents/compass
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Astro CLI
+        run: npm install -g @astropods/cli
+      - name: Deploy Compass
+        run: ast push
+        env:
+          ASTROPODS_TOKEN: ${{ secrets.ASTROPODS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_PARENT_PAGE_ID: ${{ secrets.NOTION_PARENT_PAGE_ID }}
+
+  deploy-stride:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.stride == 'true' || github.event.inputs.agent == 'stride' || github.event.inputs.agent == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agents/stride
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Astro CLI
+        run: npm install -g @astropods/cli
+      - name: Deploy Stride
+        run: ast push
+        env:
+          ASTROPODS_TOKEN: ${{ secrets.ASTROPODS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+  deploy-ledger:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.ledger == 'true' || github.event.inputs.agent == 'ledger' || github.event.inputs.agent == ''
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: agents/ledger
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Astro CLI
+        run: npm install -g @astropods/cli
+      - name: Deploy Ledger
+        run: ast push
+        env:
+          ASTROPODS_TOKEN: ${{ secrets.ASTROPODS_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}

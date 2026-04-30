@@ -1,0 +1,20 @@
+spec: package/v1
+name: pixel
+meta:
+  visibility: private
+  description: Brand & visual direction — image prompts, visual guidelines
+  labels:
+    department: marketing
+    role: design
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  interfaces:
+    messaging: true
+  dev:
+    command: bun --watch agent/index.ts
+models:
+  main:
+    provider: anthropic
+    models: [claude-sonnet-4-20250514]

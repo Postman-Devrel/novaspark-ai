@@ -1,0 +1,20 @@
+spec: package/v1
+name: ledger
+meta:
+  visibility: private
+  description: Finance agent — expense categorizer and anomaly detection
+  labels:
+    department: finance
+    role: accounting
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  interfaces:
+    messaging: true
+  dev:
+    command: bun --watch agent/index.ts
+models:
+  main:
+    provider: anthropic
+    models: [claude-sonnet-4-20250514]

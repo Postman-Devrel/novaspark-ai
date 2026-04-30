@@ -1,0 +1,79 @@
+.header {
+  background: var(--space-2);
+  border-bottom: 1px solid var(--space-3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 28px;
+  filter: drop-shadow(0 0 8px #F97316aa);
+}
+
+.brand-name {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cloud);
+  letter-spacing: -0.3px;
+}
+
+.brand-tag {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--mono);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.tagline {
+  font-size: 12px;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.platform-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--space-3);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--text);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--space-3);
+  flex-shrink: 0;
+}
+
+.dot.online { background: #22C55E; box-shadow: 0 0 6px #22C55Eaa; }
+.dot.idle   { background: #EAB308; }
+.dot.offline { background: #EF4444; }

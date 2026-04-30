@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NovaSpark AI — Agent Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+    min-width: 1600px;
+    padding: 40px 32px 60px;
+    color: #1a1a2e;
+  }
+
+  .page-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 36px;
+    letter-spacing: -0.3px;
+  }
+
+  .dept-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  /* Department column */
+  .dept {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 220px;
+  }
+
+  .dept-header {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 16px;
+    padding: 6px 14px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    white-space: nowrap;
+  }
+
+  .dept-icon { font-size: 15px; }
+
+  .sub-columns {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .sub-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 160px;
+  }
+
+  .sub-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #6b7280;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 4px 10px;
+    white-space: nowrap;
+  }
+
+  .sub-header-icon { font-size: 11px; }
+
+  /* Agent Card */
+  .agent-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 11px;
+    width: 158px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: box-shadow 0.15s, transform 0.15s;
+  }
+
+  .agent-card:hover {
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    transform: translateY(-1px);
+  }
+
+  .agent-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 5px;
+  }
+
+  .agent-logo {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .agent-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.3;
+    margin-top: 1px;
+  }
+
+  .agent-desc {
+    font-size: 9.5px;
+    color: #6b7280;
+    line-height: 1.4;
+    margin-left: 34px;
+    margin-bottom: 6px;
+  }
+
+  .agent-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-left: 34px;
+  }
+
+  .tool-badge {
+    font-size: 8.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  /* Tool badge colors */
+  .tool-claude   { background: #fdf4ff; color: #9333ea; border-color: #e9d5ff; }
+  .tool-github   { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+  .tool-slack    { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+  .tool-search   { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+  .tool-notion   { background: #f9fafb; color: #374151; border-color: #e5e7eb; }
+  .tool-drive    { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .tool-sheets   { background: #f0fdf4; color: #15803d; border-color: #86efac; }
+  .tool-email    { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+  .tool-vision   { background: #fdf4ff; color: #7c3aed; border-color: #ddd6fe; }
+  .tool-linkedin { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+  .tool-cal      { background: #fff7ed; color: #ea580c; border-color: #fed7aa; }
+  .tool-csv      { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+  .tool-hr       { background: #fdf4ff; color: #9333ea; border-color: #e9d5ff; }
+  .tool-hubspot  { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+
+  .stars {
+    display: flex;
+    gap: 1px;
+    margin-left: 34px;
+    margin-top: 5px;
+  }
+  .star { font-size: 8px; color: #fbbf24; }
+  .star.empty { color: #d1d5db; }
+
+  /* Section dividers */
+  .section-label {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 36px 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .section-label::before,
+  .section-label::after {
+    content: '';
+    height: 1px;
+    background: #e5e7eb;
+    flex: 1;
+    max-width: 120px;
+  }
+
+  .dept-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 24px;
+    padding: 7px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  .all-depts {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .dept-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sub-cols-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .connector-line {
+    width: 1px;
+    height: 16px;
+    background: #d1d5db;
+    margin: 0 auto 0;
+  }
+
+  /* Colors per dept */
+  .dept-marketing .dept-pill { border-color: #c4b5fd; }
+  .dept-dev       .dept-pill { border-color: #86efac; }
+  .dept-hr        .dept-pill { border-color: #fca5a5; }
+  .dept-sales     .dept-pill { border-color: #fdba74; }
+  .dept-finance   .dept-pill { border-color: #93c5fd; }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 8px;
+    font-weight: 600;
+    color: #16a34a;
+    background: #dcfce7;
+    border-radius: 10px;
+    padding: 2px 6px;
+    margin-left: auto;
+  }
+
+  .live-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #16a34a;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .logo-mark {
+    font-size: 24px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+
+  .tagline {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: 400;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  .org-badge {
+    font-size: 11px;
+    background: #f3f0ff;
+    color: #7c3aed;
+    border: 1px solid #ddd6fe;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span class="logo-mark">⚡ NovaSpark AI</span>
+  <span class="org-badge">Deployed on Astro AI</span>
+</div>
+<div class="page-title">Agent Map — All Departments</div>
+<p class="tagline">1 founder · 6 AI agents · 5 departments · fully deployed</p>
+
+<div class="all-depts">
+
+  <!-- ═══════════════ MARKETING ═══════════════ -->
+  <div class="dept-block dept-marketing">
+    <div class="dept-pill">🎯 Marketing</div>
+    <div class="sub-cols-row">
+
+      <!-- BLAZE -->
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">✍️</span> Content Creation</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fdf4ff;">🔥</div>
+            <div>
+              <div class="agent-name">Blaze</div>
+              <div style="display:flex;align-items:center;margin-top:1px;"><span class="live-badge"><span class="live-dot"></span>Live</span></div>
+            </div>
+          </div>
+          <div class="agent-desc">Writes blogs, LinkedIn posts & newsletters from a single topic brief</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-search">Web Search</span>
+            <span class="tool-badge tool-linkedin">LinkedIn</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        </div>
+        <div class="agent-card" style="margin-top:8px;">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#eff6ff;">📝</div>
+            <div><div class="agent-name">Blog Post Writer</div></div>
+          </div>
+          <div class="agent-desc">Long-form SEO-optimized posts with structured outlines</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-notion">Notion</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+        <div class="agent-card" style="margin-top:8px;">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fff7ed;">📧</div>
+            <div><div class="agent-name">Newsletter Builder</div></div>
+          </div>
+          <div class="agent-desc">Weekly digest compiled from recent content and web signals</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-email">Gmail</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+      <!-- PIXEL -->
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">🎨</span> Brand & Visual</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fdf4ff;">🎨</div>
+            <div>
+              <div class="agent-name">Pixel</div>
+              <div style="display:flex;align-items:center;margin-top:1px;"><span class="live-badge"><span class="live-dot"></span>Live</span></div>
+            </div>
+          </div>
+          <div class="agent-desc">Creative direction, image prompts & brand consistency review</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude Vision</span>
+            <span class="tool-badge tool-drive">Drive</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        </div>
+        <div class="agent-card" style="margin-top:8px;">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#f0fdf4;">🖼️</div>
+            <div><div class="agent-name">Social Image Prompter</div></div>
+          </div>
+          <div class="agent-desc">Generates image generation prompts matched to brand tone</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-vision">Vision</span>
+            <span class="tool-badge tool-claude">Claude</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ DEVELOPMENT ═══════════════ -->
+  <div class="dept-block dept-dev">
+    <div class="dept-pill">💻 Development</div>
+    <div class="sub-cols-row">
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">🔍</span> Code Review</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#f0fdf4;">⚒️</div>
+            <div>
+              <div class="agent-name">Forge</div>
+              <div style="display:flex;align-items:center;margin-top:1px;"><span class="live-badge"><span class="live-dot"></span>Live</span></div>
+            </div>
+          </div>
+          <div class="agent-desc">Reviews PRs for bugs, security issues & style violations</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-github">GitHub</span>
+            <span class="tool-badge tool-slack">Slack</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">📋</span> PR Analysis</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#eff6ff;">🧪</div>
+            <div><div class="agent-name">PR Diff Analyzer</div></div>
+          </div>
+          <div class="agent-desc">Summarizes code changes and flags breaking changes</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-github">GitHub API</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">📚</span> Docs</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fdf4ff;">📖</div>
+            <div><div class="agent-name">Doc Generator</div></div>
+          </div>
+          <div class="agent-desc">Auto-generates README and inline docs from code</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-notion">Notion</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ HR ═══════════════ -->
+  <div class="dept-block dept-hr">
+    <div class="dept-pill">👥 HR / People Ops</div>
+    <div class="sub-cols-row">
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">🧭</span> Onboarding</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fff1f2;">🧭</div>
+            <div>
+              <div class="agent-name">Compass</div>
+              <div style="display:flex;align-items:center;margin-top:1px;"><span class="live-badge"><span class="live-dot"></span>Live</span></div>
+            </div>
+          </div>
+          <div class="agent-desc">Personalized Day 1–30 onboarding plan for every new hire</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-notion">Notion</span>
+            <span class="tool-badge tool-cal">Calendar</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">📜</span> Policy Q&A</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fdf4ff;">❓</div>
+            <div><div class="agent-name">Policy Bot</div></div>
+          </div>
+          <div class="agent-desc">Answers employee questions from the company handbook</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-hr">Handbook KB</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">📅</span> Scheduling</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fff7ed;">🗓️</div>
+            <div><div class="agent-name">Interview Scheduler</div></div>
+          </div>
+          <div class="agent-desc">Coordinates interview slots across hiring team calendars</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-cal">Google Cal</span>
+            <span class="tool-badge tool-email">Gmail</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ SALES ═══════════════ -->
+  <div class="dept-block dept-sales">
+    <div class="dept-pill">💰 Sales</div>
+    <div class="sub-cols-row">
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">🏃</span> Outreach</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fff7ed;">🏃</div>
+            <div>
+              <div class="agent-name">Stride</div>
+              <div style="display:flex;align-items:center;margin-top:1px;"><span class="live-badge"><span class="live-dot"></span>Live</span></div>
+            </div>
+          </div>
+          <div class="agent-desc">Personalized cold email + LinkedIn + follow-up sequences</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-search">Web Search</span>
+            <span class="tool-badge tool-linkedin">LinkedIn</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">🎯</span> Lead Scoring</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fdf4ff;">📊</div>
+            <div><div class="agent-name">Lead Qualifier</div></div>
+          </div>
+          <div class="agent-desc">Scores and routes inbound leads using ICP criteria</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-hubspot">HubSpot</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">🔄</span> Follow-up</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#f0fdf4;">📬</div>
+            <div><div class="agent-name">Follow-up Drafter</div></div>
+          </div>
+          <div class="agent-desc">Writes context-aware follow-up emails after meetings</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-email">Gmail</span>
+            <span class="tool-badge tool-claude">Claude</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════ FINANCE ═══════════════ -->
+  <div class="dept-block dept-finance">
+    <div class="dept-pill">📊 Finance</div>
+    <div class="sub-cols-row">
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">📒</span> Expense Tracking</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#eff6ff;">📒</div>
+            <div>
+              <div class="agent-name">Ledger</div>
+              <div style="display:flex;align-items:center;margin-top:1px;"><span class="live-badge"><span class="live-dot"></span>Live</span></div>
+            </div>
+          </div>
+          <div class="agent-desc">Auto-categorizes expenses and flags anomalies from CSV or chat</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-csv">CSV Parser</span>
+            <span class="tool-badge tool-sheets">Sheets</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">📈</span> Forecasting</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#f0fdf4;">🔮</div>
+            <div><div class="agent-name">Foresight</div></div>
+          </div>
+          <div class="agent-desc">Rolling revenue + cash flow projections from live data</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-sheets">Sheets</span>
+            <span class="tool-badge tool-claude">Claude</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+      <div class="sub-col">
+        <div class="sub-header"><span class="sub-header-icon">✅</span> Compliance</div>
+        <div class="agent-card">
+          <div class="agent-top">
+            <div class="agent-logo" style="background:#fdf4ff;">🛡️</div>
+            <div><div class="agent-name">Audit Checker</div></div>
+          </div>
+          <div class="agent-desc">Flags policy violations in spend reports before submission</div>
+          <div class="agent-tools">
+            <span class="tool-badge tool-claude">Claude</span>
+            <span class="tool-badge tool-csv">Reports</span>
+          </div>
+          <div class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end all-depts -->
+
+<div style="text-align:center; margin-top:40px; font-size:10px; color:#9ca3af;">
+  NovaSpark AI · novaspark-ai · Built &amp; deployed on <strong>Astro AI</strong> · All agents powered by <strong>Claude</strong>
+</div>
+
+</body>
+</html>

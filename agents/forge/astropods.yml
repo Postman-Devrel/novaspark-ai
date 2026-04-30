@@ -1,0 +1,20 @@
+spec: package/v1
+name: forge
+meta:
+  visibility: private
+  description: PR reviewer and code quality agent
+  labels:
+    department: engineering
+    role: code-review
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  interfaces:
+    messaging: true
+  dev:
+    command: bun --watch agent/index.ts
+models:
+  main:
+    provider: anthropic
+    models: [claude-sonnet-4-20250514]

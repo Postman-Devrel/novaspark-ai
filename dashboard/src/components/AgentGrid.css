@@ -1,0 +1,25 @@
+.agent-grid-wrapper { display: flex; flex-direction: column; gap: 20px; }
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cloud);
+  margin-bottom: 4px;
+}
+
+.dept-group { display: flex; flex-direction: column; gap: 10px; }
+
+.dept-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-left: 2px;
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}

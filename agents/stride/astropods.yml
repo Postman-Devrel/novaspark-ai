@@ -1,0 +1,20 @@
+spec: package/v1
+name: stride
+meta:
+  visibility: private
+  description: Sales outreach agent — cold email and LinkedIn sequences
+  labels:
+    department: sales
+    role: outreach
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  interfaces:
+    messaging: true
+  dev:
+    command: bun --watch agent/index.ts
+models:
+  main:
+    provider: anthropic
+    models: [claude-sonnet-4-20250514]

@@ -1,0 +1,20 @@
+spec: package/v1
+name: compass
+meta:
+  visibility: private
+  description: HR onboarding guide — Day 1-30 plans and knowledge base
+  labels:
+    department: hr
+    role: onboarding
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  interfaces:
+    messaging: true
+  dev:
+    command: bun --watch agent/index.ts
+models:
+  main:
+    provider: anthropic
+    models: [claude-sonnet-4-20250514]
