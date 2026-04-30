@@ -39,9 +39,31 @@ Instead: **6 specialized AI agents** spanning Marketing, Engineering, HR, Sales,
 
 </div>
 
+<div align="center">
+
+<img src="assets/blaze-logo.svg" alt="Blaze" width="120"/>
+&nbsp;
+<img src="assets/pixel-logo.svg" alt="Pixel" width="120"/>
+&nbsp;
+<img src="assets/forge-logo.svg" alt="Forge" width="120"/>
+&nbsp;
+<img src="assets/compass-logo.svg" alt="Compass" width="120"/>
+&nbsp;
+<img src="assets/stride-logo.svg" alt="Stride" width="120"/>
+&nbsp;
+<img src="assets/ledger-logo.svg" alt="Ledger" width="120"/>
+
+</div>
+
 ---
 
 ### Marketing Department
+
+<div align="center">
+<img src="assets/blaze-logo.svg" alt="Blaze" width="160"/>
+&nbsp;&nbsp;&nbsp;
+<img src="assets/pixel-logo.svg" alt="Pixel" width="160"/>
+</div>
 
 <table>
 <tr>
@@ -97,6 +119,10 @@ Pixel is NovaSpark's visual brain — translating ideas into precise image gener
 
 ### Engineering Department
 
+<div align="center">
+<img src="assets/forge-logo.svg" alt="Forge" width="160"/>
+</div>
+
 #### ⚒️ Forge — PR Reviewer & Code Quality Guard
 
 Forge is NovaSpark's engineering quality agent. Every pull request gets a full AI-powered review before a single line ships to production.
@@ -121,6 +147,10 @@ Forge is NovaSpark's engineering quality agent. Every pull request gets a full A
 ---
 
 ### HR / People Ops Department
+
+<div align="center">
+<img src="assets/compass-logo.svg" alt="Compass" width="160"/>
+</div>
 
 #### 🧭 Compass — Onboarding Guide
 
@@ -149,6 +179,10 @@ Compass makes sure every new collaborator — contractor, advisor, or partner �
 
 ### Sales Department
 
+<div align="center">
+<img src="assets/stride-logo.svg" alt="Stride" width="160"/>
+</div>
+
 #### 🏃 Stride — Outreach Specialist
 
 Stride builds NovaSpark's outbound pipeline from scratch — researching prospects, personalizing outreach, and writing sequences that actually get replies.
@@ -171,6 +205,10 @@ Stride builds NovaSpark's outbound pipeline from scratch — researching prospec
 ---
 
 ### Finance Department
+
+<div align="center">
+<img src="assets/ledger-logo.svg" alt="Ledger" width="160"/>
+</div>
 
 #### 📒 Ledger — Expense Categorizer & Anomaly Detector
 

@@ -1,0 +1,19 @@
+{
+  "name": "@novaspark/mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NovaSpark AI — Claude Code MCP plugin exposing all 6 agents as tools",
+  "scripts": {
+    "start": "tsx index.ts",
+    "dev": "tsx watch index.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@modelcontextprotocol/sdk": "^1.10.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^22.0.0"
+  }
+}

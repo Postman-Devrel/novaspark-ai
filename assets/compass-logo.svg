@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#081418"/>
+      <stop offset="100%" stop-color="#080C1A"/>
+    </radialGradient>
+    <radialGradient id="vertGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="18%" stop-color="#BAE6FD"/>
+      <stop offset="55%" stop-color="#06B6D4"/>
+      <stop offset="100%" stop-color="#0891B2" stop-opacity="0.1"/>
+    </radialGradient>
+    <radialGradient id="horizGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="28%" stop-color="#67E8F9" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.05"/>
+    </radialGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#BAE6FD" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="streak1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67E8F9" stop-opacity="0"/>
+      <stop offset="45%" stop-color="#06B6D4" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="streak2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0"/>
+      <stop offset="55%" stop-color="#67E8F9" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.2"/>
+    </linearGradient>
+    <filter id="starGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlur" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="400" fill="url(#bg)" rx="22"/>
+
+  <!-- Star field -->
+  <circle cx="42" cy="52" r="1.2" fill="white" opacity="0.45"/>
+  <circle cx="358" cy="68" r="1.5" fill="white" opacity="0.3"/>
+  <circle cx="72" cy="318" r="1" fill="white" opacity="0.4"/>
+  <circle cx="348" cy="335" r="1.2" fill="white" opacity="0.35"/>
+  <circle cx="325" cy="118" r="1" fill="white" opacity="0.25"/>
+  <circle cx="52" cy="228" r="1.5" fill="white" opacity="0.2"/>
+  <circle cx="382" cy="195" r="1" fill="white" opacity="0.3"/>
+  <circle cx="105" cy="142" r="1" fill="white" opacity="0.22"/>
+  <circle cx="288" cy="295" r="1.2" fill="white" opacity="0.28"/>
+  <circle cx="165" cy="55" r="1" fill="white" opacity="0.2"/>
+  <circle cx="310" cy="355" r="1" fill="white" opacity="0.22"/>
+
+  <!-- Ambient halo -->
+  <circle cx="200" cy="172" r="105" fill="url(#halo)" filter="url(#softBlur)"/>
+
+  <!-- Orbit rings (Compass-specific: double orbit) -->
+  <circle cx="200" cy="172" r="80" fill="none" stroke="#06B6D4" stroke-width="0.8" opacity="0.3"/>
+  <circle cx="200" cy="172" r="94" fill="none" stroke="#06B6D4" stroke-width="0.5" opacity="0.14"/>
+
+  <!-- Cardinal tick marks (Compass-specific) -->
+  <line x1="200" y1="92" x2="200" y2="85" stroke="#06B6D4" stroke-width="1.5" opacity="0.5"/>
+  <line x1="200" y1="252" x2="200" y2="259" stroke="#06B6D4" stroke-width="1.5" opacity="0.3"/>
+  <line x1="120" y1="172" x2="113" y2="172" stroke="#06B6D4" stroke-width="1.5" opacity="0.3"/>
+  <line x1="280" y1="172" x2="287" y2="172" stroke="#06B6D4" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- Comet streaks -->
+  <line x1="232" y1="102" x2="312" y2="152" stroke="url(#streak1)" stroke-width="2.2" opacity="0.55"/>
+  <line x1="238" y1="112" x2="308" y2="156" stroke="url(#streak2)" stroke-width="1.2" opacity="0.35"/>
+  <line x1="244" y1="120" x2="305" y2="160" stroke="url(#streak2)" stroke-width="0.6" opacity="0.2"/>
+
+  <!-- Star glow layers -->
+  <ellipse cx="200" cy="172" rx="17" ry="76" fill="#06B6D4" opacity="0.25" filter="url(#softBlur)"/>
+  <ellipse cx="200" cy="172" rx="62" ry="14" fill="#06B6D4" opacity="0.2" filter="url(#softBlur)"/>
+
+  <!-- Star — vertical petal -->
+  <ellipse cx="200" cy="172" rx="15" ry="74" fill="url(#vertGrad)" filter="url(#starGlow)"/>
+  <!-- Star — horizontal petal -->
+  <ellipse cx="200" cy="172" rx="60" ry="13" fill="url(#horizGrad)" filter="url(#starGlow)"/>
+
+  <!-- Center bright point -->
+  <circle cx="200" cy="172" r="12" fill="url(#centerGlow)"/>
+  <circle cx="200" cy="172" r="4.5" fill="white" opacity="0.98"/>
+
+  <!-- Corner accents -->
+  <path d="M18,32 L18,18 L32,18" fill="none" stroke="#06B6D4" stroke-width="1.5" opacity="0.4"/>
+  <path d="M368,18 L382,18 L382,32" fill="none" stroke="#06B6D4" stroke-width="1.5" opacity="0.4"/>
+  <path d="M18,368 L18,382 L32,382" fill="none" stroke="#06B6D4" stroke-width="1.5" opacity="0.4"/>
+  <path d="M368,382 L382,382 L382,368" fill="none" stroke="#06B6D4" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Divider -->
+  <line x1="130" y1="287" x2="270" y2="287" stroke="#06B6D4" stroke-width="0.75" opacity="0.4"/>
+
+  <!-- Agent name -->
+  <text x="200" y="318" text-anchor="middle"
+        fill="white" font-family="system-ui,-apple-system,'Segoe UI',sans-serif"
+        font-size="32" font-weight="700" letter-spacing="4">COMPASS</text>
+
+  <!-- Role -->
+  <text x="200" y="342" text-anchor="middle"
+        fill="#94A3B8" font-family="system-ui,-apple-system,'Segoe UI',sans-serif"
+        font-size="10.5" letter-spacing="3.5">HR ONBOARDING</text>
+
+  <!-- NovaSpark brand -->
+  <text x="200" y="376" text-anchor="middle"
+        fill="#475569" font-family="system-ui,-apple-system,'Segoe UI',sans-serif"
+        font-size="9" letter-spacing="2.5">NOVASPARK AI</text>
+</svg>
