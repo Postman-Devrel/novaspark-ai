@@ -33,7 +33,7 @@ Instead: **6 specialized AI agents** spanning Marketing, Engineering, HR, Sales,
 
 <div align="center">
 
-<img src="assets/novaspark-agent-map.png" alt="NovaSpark AI Agent Map — All Departments" width="100%"/>
+<img src="assets/novaspark-agent-map-v2.png" alt="NovaSpark AI Agent Map — All Departments" width="100%"/>
 
 *1 founder · 6 AI agents · 5 departments · fully deployed*
 
