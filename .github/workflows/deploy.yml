@@ -14,6 +14,7 @@ on:
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
+    timeout-minutes: 3
     outputs:
       blaze: ${{ steps.filter.outputs.blaze }}
       pixel: ${{ steps.filter.outputs.pixel }}
@@ -38,6 +39,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.blaze == 'true' || github.event.inputs.agent == 'blaze' || github.event.inputs.agent == ''
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: agents/blaze
@@ -55,6 +57,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.pixel == 'true' || github.event.inputs.agent == 'pixel' || github.event.inputs.agent == ''
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: agents/pixel
@@ -72,6 +75,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.forge == 'true' || github.event.inputs.agent == 'forge' || github.event.inputs.agent == ''
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: agents/forge
@@ -91,6 +95,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.compass == 'true' || github.event.inputs.agent == 'compass' || github.event.inputs.agent == ''
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: agents/compass
@@ -110,6 +115,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.stride == 'true' || github.event.inputs.agent == 'stride' || github.event.inputs.agent == ''
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: agents/stride
@@ -127,6 +133,7 @@ jobs:
     needs: detect-changes
     if: needs.detect-changes.outputs.ledger == 'true' || github.event.inputs.agent == 'ledger' || github.event.inputs.agent == ''
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: agents/ledger
