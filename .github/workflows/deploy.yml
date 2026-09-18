@@ -23,6 +23,8 @@ jobs:
       ledger: ${{ steps.filter.outputs.ledger }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: dorny/paths-filter@v3
         id: filter
         with:
@@ -43,6 +45,8 @@ jobs:
         working-directory: agents/blaze
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Astro CLI
         run: npm install -g @astropods/cli
       - name: Deploy Blaze
@@ -60,6 +64,8 @@ jobs:
         working-directory: agents/pixel
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Astro CLI
         run: npm install -g @astropods/cli
       - name: Deploy Pixel
@@ -77,6 +83,8 @@ jobs:
         working-directory: agents/forge
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Astro CLI
         run: npm install -g @astropods/cli
       - name: Deploy Forge
@@ -96,6 +104,8 @@ jobs:
         working-directory: agents/compass
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Astro CLI
         run: npm install -g @astropods/cli
       - name: Deploy Compass
@@ -115,6 +125,8 @@ jobs:
         working-directory: agents/stride
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Astro CLI
         run: npm install -g @astropods/cli
       - name: Deploy Stride
@@ -132,6 +144,8 @@ jobs:
         working-directory: agents/ledger
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Install Astro CLI
         run: npm install -g @astropods/cli
       - name: Deploy Ledger
